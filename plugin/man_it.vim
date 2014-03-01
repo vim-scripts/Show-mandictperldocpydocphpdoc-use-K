@@ -12,6 +12,11 @@ if exists('loaded_man_it') || &cp
 endif
 let loaded_ditc_it = 1
 
+" toggle whether the man/doc window is focused on creation
+if !exists("g:man_it_focus_window")
+    let g:man_it_focus_window = 0
+endif
+
 let s:wordHis = []
 let s:wordHisIdx = -1
 
@@ -58,7 +63,9 @@ function! s:WinShow(args)
     setlocal nomodifiable
     exec '1'
     exec 'setlocal ft='.type
-    silent! exec oldWinNr.'wincmd w'
+    if g:man_it_focus_window == 0
+      silent! exec oldWinNr.'wincmd w'
+    endif
 endfun
 
 function! s:GetWord()
